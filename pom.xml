@@ -49,9 +49,45 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--Swagger2构建restful api文档-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+
+
     </dependencies>
 
+    <!--Maven的profiles用来实现多环境配置打包-->
+    <!--实现根据选中的Maven Profile 激活Spring Boot Profile的属性spring.profiles.active-->
+    <!--打包命令：mvn clean package -Dmaven.test.skip=true -P${activatedProperties}，样例即 "-Pdev" -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <finalName>personal-site</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
